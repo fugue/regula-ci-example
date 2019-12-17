@@ -7,4 +7,4 @@ jobs:
     steps:
     - name: Regula hello world action step
       id: regula
-      uses: jaspervdj-luminal/regula-action@v1
+      uses: jaspervdj-luminal/regula-action@37531218ebfc44fe0d395dd3972ee359c5eab9aa
