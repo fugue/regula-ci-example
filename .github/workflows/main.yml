@@ -3,9 +3,9 @@ on: [push]
 jobs:
   regula_job:
     runs-on: ubuntu-latest
-    name: Regula job
+    name: Regula
     steps:
     - uses: actions/checkout@master
-    - name: Regula hello world action step
+    - name: Regula
       id: regula
-      uses: jaspervdj-luminal/regula-action@37531218ebfc44fe0d395dd3972ee359c5eab9aa
+      uses: jaspervdj-luminal/regula-action@master
