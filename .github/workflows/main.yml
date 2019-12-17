@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Regula job
     steps:
+    - uses: actions/checkout@master
     - name: Regula hello world action step
       id: regula
       uses: jaspervdj-luminal/regula-action@37531218ebfc44fe0d395dd3972ee359c5eab9aa
