@@ -1,0 +1,10 @@
+on: [push]
+
+jobs:
+  regula_job:
+    runs-on: ubuntu-latest
+    name: Regula job
+    steps:
+    - name: Regula hello world action step
+      id: regula
+      uses: jaspervdj-luminal/regula-action@v1
