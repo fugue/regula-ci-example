@@ -9,7 +9,7 @@ resource "aws_ebs_volume" "bad" {
 
 resource "aws_ebs_volume" "good" {
   availability_zone = "us-west-2a"
-  size              = 4
+  size              = 8
   encrypted         = true
 }
 
