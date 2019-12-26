@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Regula
       id: regula
-      uses: jaspervdj-luminal/regula-action@5ecffbf5
+      uses: jaspervdj-luminal/regula-action@5503aa8
       with:
         terraform_directory: .
       env:
