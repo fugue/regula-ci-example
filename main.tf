@@ -1,20 +1,25 @@
 provider "aws" {
-  region = "eu-west-1"
+  version = "~> 2.41"
+  region  = "us-west-2"
 }
 
-resource "aws_ebs_volume" "bad" {
-  availability_zone = "us-west-2a"
-  size              = 8
-}
+resource "aws_iam_policy" "some_policy" {
+  name        = "some_policy"
+  path        = "/"
+  description = "Some policy"
 
-resource "aws_ebs_volume" "good" {
-  availability_zone = "us-west-2a"
-  size              = 8
-  encrypted         = true
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*"
+      ],
+      "Effect": "Deny",
+      "Resource": "*"
+    }
+  ]
 }
-
-resource "aws_ebs_volume" "large" {
-  availability_zone = "us-west-2a"
-  size              = 32
-  encrypted         = true
+EOF
 }
