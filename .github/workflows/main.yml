@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Regula
       id: regula
-      uses: fugue/regula-action@d65571bc
+      uses: fugue/regula-action@94a2370a
       with:
         terraform_directory: .
         rego_paths: /opt/regula/rules example_custom_rule
