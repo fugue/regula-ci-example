@@ -6,5 +6,5 @@ The configuration is here:
 [.github/workflows/main.yml](.github/workflows/main.yml).
 
 There is an example of a custom rule for this repository as well --
-[exampe\_custom\_rule/long_description.rego](exampe\_custom\_rule/long_description.rego).
+[example\_custom\_rule/long_description.rego](example\_custom\_rule/long_description.rego).
 By passing this directory to regula, it gets included in the report.
