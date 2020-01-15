@@ -16,7 +16,7 @@ before_script:
 
 # Install terraform.
 - curl -Lo "/tmp/terraform-$TERRAFORM_VERSION.zip" "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
-- unzip -d "$HOME/.local/bin/terraform" "/tmp/terraform-$TERRAFORM_VERSION.zip"
+- unzip -d "$HOME/.local/bin/" "/tmp/terraform-$TERRAFORM_VERSION.zip"
 
 # Install regula script and libraries.
 - mkdir "$HOME/.local/share/regula"
