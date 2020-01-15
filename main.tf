@@ -13,9 +13,7 @@ resource "aws_iam_policy" "basically_allow_all" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": [
-        "*"
-      ],
+      "Action": "*",
       "Effect": "Allow",
       "Resource": "*"
     }

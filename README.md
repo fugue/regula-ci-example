@@ -1,19 +1,20 @@
 # regula-ci-example
 
-[Regula](https://github.com/fugue/regula) is a tool that evaluates Terraform infrastructure-as-code for potential security misconfigurations and compliance violations prior to deployment. This repo shows an example of using [GitHub Actions](https://github.com/fugue/regula-action) to run Regula against a repository.
+[Regula](https://github.com/fugue/regula) is a tool that evaluates Terraform infrastructure-as-code for potential security misconfigurations and compliance violations prior to deployment. This repo contains examples of using [regula] in CI.
 
-The GitHub Action is here: <https://github.com/fugue/regula-action>
+Regula is currently set up with the following CI systems:
 
-The configuration is here:
-[.github/workflows/main.yml](.github/workflows/main.yml).
+ -  GitHub Actions: [.github/workflows/main.yml](.github/workflows/main.yml)
+ -  Travis: [.travis.yml](.travis.yml)
 
 There is an example of a custom rule for this repository as well --
 [example\_custom\_rule/long_description.rego](example\_custom\_rule/long_description.rego).
-By passing this directory to Regula, it gets included in the report.
 
-## How to use this GitHub Action
+By passing this directory to regula, it gets included in the report.
 
-To use Regula to evaluate the Terraform in your own repository via GitHub Actions, see the instructions below.
+## GitHub Action Example
+
+To use Regula to evaluate the Terraform in your own repository via GitHub Actions, see the instructions below. The GitHub Action itself is here: <https://github.com/fugue/regula-action>
 
 ### 1. Customize workflow
 
@@ -148,10 +149,12 @@ The resource `aws_iam_policy.basically_allow_all` _also_ failed the custom rule 
               },
 ```
 
+## Further Reading
 For more information about Regula and how to use it, check out these resources:
 
 - [Regula](https://github.com/fugue/regula)
 - [Regula GitHub Action](https://github.com/fugue/regula-action)
 - [fregot](https://github.com/fugue/fregot)
 - [OPA](https://www.openpolicyagent.org/)
-- [GitHub Actions](https://help.github.com/en/actions)
+
+[regula]: https://github.com/fugue/regula
