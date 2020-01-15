@@ -23,7 +23,7 @@ before_script:
 
 script:
 # Run regula
-- "$HOME/.local/share/regula/bin/regula" "$HOME/.local/share/regula/rules" example_custom_rule | tee /tmp/regula.json
+- $HOME/.local/share/regula/bin/regula $HOME/.local/share/regula/rules example_custom_rule | tee /tmp/regula.json
 - |
   if [[ "$(jq -r '.result[0].expressions[0].value.summary.valid' /tmp/regula.json)" != "true" ]]; then
     echo "Some rules failed!"
