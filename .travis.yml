@@ -27,9 +27,10 @@ before_script:
 
 script:
 # Run regula
-- $REGULA_DIR/bin/regula . $REGULA_DIR/lib $REGULA_DIR/rules example_custom_rule | tee /tmp/regula.json
+- REGULA_OUTPUT="$(mktemp)"
+- $REGULA_DIR/bin/regula . $REGULA_DIR/lib $REGULA_DIR/rules example_custom_rule | tee "$REGULA_OUTPUT"
 - |
-  if [[ "$(jq -r '.result[0].expressions[0].value.summary.valid' /tmp/regula.json)" != "true" ]]; then
+  if [[ "$(jq -r '.result[0].expressions[0].value.summary.valid' "$REGULA_OUTPUT")" != "true" ]]; then
     echo "Some rules failed!"
     exit 1
   fi
