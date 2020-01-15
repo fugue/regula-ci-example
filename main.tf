@@ -6,16 +6,14 @@ provider "aws" {
 resource "aws_iam_policy" "basically_allow_all" {
   name        = "some_policy"
   path        = "/"
-  description = "Some policy with okay we're gonna give this a long description as well"
+  description = "Some policy"
 
   policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": [
-        "s3:GetObject"
-      ],
+      "Action": "*",
       "Effect": "Allow",
       "Resource": "*"
     }
