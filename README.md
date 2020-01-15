@@ -1,4 +1,6 @@
-# regula-action-example
+# regula-ci-example
+
+An example of using [regula] in CI.
 
 An example of using <https://github.com/fugue/regula-action>.
 
@@ -8,3 +10,5 @@ The configuration is here:
 There is an example of a custom rule for this repository as well --
 [example\_custom\_rule/long_description.rego](example\_custom\_rule/long_description.rego).
 By passing this directory to regula, it gets included in the report.
+
+[regula]: https://github.com/fugue/regula
