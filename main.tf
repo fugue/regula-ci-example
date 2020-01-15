@@ -14,7 +14,7 @@ resource "aws_iam_policy" "basically_allow_all" {
   "Statement": [
     {
       "Action": [
-        "*"
+        "s3:GetObject"
       ],
       "Effect": "Allow",
       "Resource": "*"
