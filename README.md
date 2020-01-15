@@ -2,7 +2,7 @@
 
 [Regula](https://github.com/fugue/regula) is a tool that evaluates Terraform infrastructure-as-code for potential security misconfigurations and compliance violations prior to deployment. This repo contains examples of using [regula] in CI.
 
-Regula is currently set up with the following CI systems:
+This example is currently set up with the following CI systems:
 
  -  GitHub Actions: [.github/workflows/main.yml](.github/workflows/main.yml)
  -  Travis: [.travis.yml](.travis.yml)
