@@ -22,7 +22,7 @@ before_script:
 
 # Install regula script and libraries.
 - mkdir "$HOME/.local/share/regula"
-- curl -L "https://github.com/fugue/regula/archive/v$REGULA_VERSION.tar.gz" | tar -xz --strip-components=1 -C "$HOME/.local/share/regula"
+- curl -L "https://github.com/fugue/regula/archive/v$REGULA_VERSION.tar.gz" | tar -xvz --strip-components=1 -C "$HOME/.local/share/regula"
 
 script:
 # Run regula
