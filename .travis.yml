@@ -1,0 +1,31 @@
+sudo: false
+env:
+- PATH="$HOME/.local/bin:$PATH"
+- OPA_VERSION=0.15.1
+- TERRAFORM_VERSION=0.12.18
+- TF_IN_AUTOMATION=true
+- REGULA_VERSION=0.0.1
+
+before_script:
+- mkdir "$HOME/.local/bin"
+
+# Install OPA
+- curl -Lo "$HOME/.local/bin/opa" "https://github.com/open-policy-agent/opa/releases/download/v$OPA_VERSION/opa_linux_amd64"
+- chmod +x "$HOME/.local/bin/opa"
+
+# Install terraform.
+- curl -Lo "/tmp/terraform-$TERRAFORM_VERSION.zip" "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+- unzip -d "$HOME/.local/bin/opa" "/tmp/terraform-$TERRAFORM_VERSION.zip"
+
+# Install regula script and libraries.
+- mkdir "$HOME/.local/share/regula"
+- curl -L "https://github.com/fugue/regula/archive/v$REGULA_VERSION.tar.gz" | tar -xz --strip-components=1 -C "$HOME/.local/share/regula"
+
+script:
+# Run regula
+- "$HOME/.local/share/regula/bin/regula" "$HOME/.local/share/regula/rules" example_custom_rule | tee /tmp/regula.json
+- |
+  if [[ "$(jq -r '.result[0].expressions[0].value.summary.valid' /tmp/regula.json)" != "true" ]]; then
+    echo "Some rules failed!"
+    exit 1
+  fi
