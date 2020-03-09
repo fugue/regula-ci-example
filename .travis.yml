@@ -30,9 +30,7 @@ script:
 - REGULA_OUTPUT="$(mktemp)"
 - $REGULA_DIR/bin/regula . $REGULA_DIR/lib $REGULA_DIR/rules example_custom_rule | tee "$REGULA_OUTPUT"
 - REGULA_VALID="$(jq -r '.result[0].expressions[0].value.summary.valid' "$REGULA_OUTPUT")"
-- REGULA_RULES_PASSED="$(jq -r '.result[0].expressions[0].value.summary.rules_passed' "$REGULA_OUTPUT")"
-- REGULA_RULES_FAILED="$(jq -r '.result[0].expressions[0].value.summary.rules_failed' "$REGULA_OUTPUT")"
-- echo "$REGULA_RULES_PASSED rules passed, $REGULA_RULES_FAILED rules failed"
+- jq -r '.result[0].expressions[0].value.summary.message' "$REGULA_OUTPUT"
 - |
   if [[ "$REGULA_VALID" != "true" ]]; then
     echo "Some rules failed!"
