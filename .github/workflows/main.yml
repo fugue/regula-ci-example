@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Regula
       id: regula
-      uses: fugue/regula-action@d647adcd97d1942340d65e979203092d3b6356f4
+      uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
       with:
         input_path: infra_tf
         rego_paths: /opt/regula/rules example_custom_rule
@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Regula
       id: regula
-      uses: fugue/regula-action@d647adcd97d1942340d65e979203092d3b6356f4
+      uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
       with:
         input_path: infra_cfn/cloudformation.yaml
         rego_paths: /opt/regula/rules
