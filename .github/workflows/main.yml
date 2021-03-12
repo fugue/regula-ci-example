@@ -6,9 +6,7 @@ jobs:
     name: Regula Terraform
     steps:
     - uses: actions/checkout@master
-    - name: Regula
-      id: regula
-      uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
+    - uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
       with:
         input_path: infra_tf
         rego_paths: /opt/regula/rules example_custom_rule
@@ -21,9 +19,17 @@ jobs:
     name: Regula CloudFormation
     steps:
     - uses: actions/checkout@master
-    - name: Regula
-      id: regula
-      uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
+    - uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
       with:
         input_path: infra_cfn/cloudformation.yaml
+        rego_paths: /opt/regula/rules
+
+  regula_valid_cfn_job:
+    runs-on: ubuntu-latest
+    name: Regula CloudFormation
+    steps:
+    - uses: actions/checkout@master
+    - uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
+      with:
+        input_path: infra_valid_cfn/cloudformation.yaml
         rego_paths: /opt/regula/rules
