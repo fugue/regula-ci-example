@@ -26,7 +26,7 @@ jobs:
 
   regula_valid_cfn_job:
     runs-on: ubuntu-latest
-    name: Regula CloudFormation
+    name: Regula Valid CloudFormation
     steps:
     - uses: actions/checkout@master
     - uses: fugue/regula-action@996f358972ac9252dd776becc36af1d962bf4d72
