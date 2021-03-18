@@ -1,17 +1,35 @@
 on: [push]
 
 jobs:
-  regula_job:
+  regula_tf_job:
     runs-on: ubuntu-latest
-    name: Regula
+    name: Regula Terraform
     steps:
     - uses: actions/checkout@master
-    - name: Regula
-      id: regula
-      uses: fugue/regula-action@v0.5.0
+    - uses: fugue/regula-action@v0.6.0
       with:
-        terraform_directory: .
+        input_path: infra_tf
         rego_paths: /opt/regula/rules example_custom_rule
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  regula_cfn_job:
+    runs-on: ubuntu-latest
+    name: Regula CloudFormation
+    steps:
+    - uses: actions/checkout@master
+    - uses: fugue/regula-action@v0.6.0
+      with:
+        input_path: infra_cfn/cloudformation.yaml
+        rego_paths: /opt/regula/rules
+
+  regula_valid_cfn_job:
+    runs-on: ubuntu-latest
+    name: Regula Valid CloudFormation
+    steps:
+    - uses: actions/checkout@master
+    - uses: fugue/regula-action@v0.6.0
+      with:
+        input_path: infra_valid_cfn/cloudformation.yaml
+        rego_paths: /opt/regula/rules
