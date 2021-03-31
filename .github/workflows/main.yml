@@ -48,7 +48,7 @@ jobs:
 
   regula_input_list_job:
     runs-on: ubuntu-latest
-    name: Regula multiple CloudFormation templates
+    name: Regula on CloudFormation and Terraform
     steps:
     - uses: actions/checkout@master
     - uses: fugue/regula-action@b9c14d3af0333de617bb5258e21d5823d6762939
@@ -58,3 +58,6 @@ jobs:
           infra_valid_cfn/cloudformation.yaml
           infra_tf
         rego_paths: /opt/regula/rules
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
