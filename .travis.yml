@@ -30,7 +30,7 @@ before_script:
 script:
 # Run regula
 - REGULA_OUTPUT="$(mktemp)"
-- $REGULA_DIR/bin/regula infra_tf $REGULA_DIR/lib $REGULA_DIR/rules example_custom_rule >"$REGULA_OUTPUT"
+- $REGULA_DIR/bin/regula -d $REGULA_DIR/lib -d $REGULA_DIR/rules -d example_custom_rule | tee "$REGULA_OUTPUT"
 - REGULA_RULES_PASSED="$(jq -r '.summary.rule_results.PASS' "$REGULA_OUTPUT")"
 - REGULA_RULES_FAILED="$(jq -r '.summary.rule_results.FAIL' "$REGULA_OUTPUT")"
 - echo "${REGULA_RULES_PASSED} rules passed, ${REGULA_RULES_FAILED} rules failed" >&2
