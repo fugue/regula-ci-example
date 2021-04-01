@@ -2,7 +2,7 @@ sudo: false
 env:
   global:
   - PATH="$HOME/.local/bin:$PATH"
-  - OPA_VERSION=0.21.0
+  - OPA_VERSION=0.26.0
   - TERRAFORM_VERSION=0.12.18
   - TF_IN_AUTOMATION=true
   - REGULA_VERSION=v0.7.0
