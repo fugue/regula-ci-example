@@ -5,7 +5,7 @@ env:
   - OPA_VERSION=0.26.0
   - TERRAFORM_VERSION=0.12.18
   - TF_IN_AUTOMATION=true
-  - REGULA_VERSION=v0.7.0
+  - REGULA_VERSION=v0.8.0
   - REGULA_DIR="$HOME/.local/bin/regula"
   # AWS_ACCESS_KEY_ID
   - secure: "Z2iYEVPKsAtrPAOoutWqK20vxOac8CKnosQbjn/xVF9wPSOFZvtoem8Te6269CfBS8qH46lHXUoHLTcXxvUkKQFfgMCytBKhimMtaat0cjOKYmsbtufkVrGVd7kqnBekWhFfvsJ8EgUPqdA3DglCRxami4HUJsvI+K6UNveE4Pk+E5lCDTjDVyBcOIkfbuEbADvIXs+ly5kfr6DMkX3Q71gQTA1a+hajVKm1VkMoBbNvRkZYzP1AzFYgX+OTQyyvcqjeKqRZl95FUS0KzvTLwudS1knKUHntq7O4uqG/EVzo2GHx2RSj/uU0wuz5lsdx2p7rQ/expwIxxEIGRC8JdyQpuUDTCMXwKQEJDXEcNPA+zHbFSYok12yuElUYCx3xUZywB8AYRdTrY+JlLti2proUz6ViIbOvbi6yeHfGx3iFeECDhh/IB46cead0jNTT99NNUef1+x/iOiOy4427wXF/AwidVXhkReFKE6dT5kxplOMglEWJkk0Vgg0cegBaTlWo4aQEdPve0gTN2coFPxrPZ34t/Uc7shLoF+j4ejcsN5EIJJ0Me23D+zzp16XcTzdPjllVE2jAipJi/DImKb/MjUrnnji1w0xbPcKM0/YWmqdPyVCAWDxP344WvFr42mXY/vPHl0H3VKNs0/zcHqTgSOPO9XHa9LV2BWx+t6o="
@@ -30,7 +30,7 @@ before_script:
 script:
 # Run regula
 - REGULA_OUTPUT="$(mktemp)"
-- $REGULA_DIR/bin/regula -d $REGULA_DIR/lib -d $REGULA_DIR/rules -d example_custom_rule infra_tf | tee "$REGULA_OUTPUT"
+- ($REGULA_DIR/bin/regula -d $REGULA_DIR/lib -d $REGULA_DIR/rules -d example_custom_rule infra_tf || true) | tee "$REGULA_OUTPUT"
 - REGULA_RULES_PASSED="$(jq -r '.summary.rule_results.PASS' "$REGULA_OUTPUT")"
 - REGULA_RULES_FAILED="$(jq -r '.summary.rule_results.FAIL' "$REGULA_OUTPUT")"
 - echo "${REGULA_RULES_PASSED} rules passed, ${REGULA_RULES_FAILED} rules failed" >&2
