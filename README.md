@@ -32,24 +32,19 @@ The jobs use the following [inputs](https://github.com/fugue/regula-action#input
 
 **regula_tf_job**
 - `input_path` is set to `infra_tf`, where [main.tf](https://github.com/fugue/regula-ci-example/blob/master/infra_tf/main.tf) lives.
-- `rego_paths` is set to `/opt/regula/rules example_custom_rule`, which includes the default Regula rules in addition to the rule in the [`example_custom_rule`](https://github.com/fugue/regula-ci-example/tree/master/example_custom_rule) folder. If you want to specify additional directories, you could do so with something like `/opt/regula/rules example_custom_rule company_policy_rules`.
-- See our note about environment variables [here](https://github.com/fugue/regula-action#environment-variables). You can read GitHub's documentation [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets) about securely configuring the action to use your own AWS access key ID and secret access key.
+- `rego_paths` is set to the example rule in the [`example_custom_rule`](https://github.com/fugue/regula-ci-example/tree/master/example_custom_rule) folder. If you want to specify additional directories, you could do so with something like `example_custom_rule company_policy_rules`.
 
 **regula_cfn_job**
 - `input_path` is set to [`infra_cfn/cloudformation.yaml`](https://github.com/fugue/regula-ci-example/blob/master/infra_cfn/cloudformation.yaml)
-- `rego_paths` is set to `/opt/regula/rules`
 
 **regula_valid_cfn_job**
 - `input_path` is set to [`infra_valid_cfn/cloudformation.yaml`](https://github.com/fugue/regula-ci-example/blob/master/infra_valid_cfn/cloudformation.yaml)
-- `rego_paths` is set to `/opt/regula/rules`
 
 **regula_multi_cfn_job**
 - `input_path` is set to `'*/cloudformation.yaml'`, which includes both CloudFormation templates listed above
-- `rego_paths` is set to `/opt/regula/rules`
 
 **regula_input_list_job**
 - `input_path` is set to both CloudFormation templates _and_ the Terraform directory
-- `rego_paths` is set to `/opt/regula/rules`
 
 If you'd like to further customize your action, check out GitHub's docs for [configuring a workflow](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow).
 
@@ -77,37 +72,44 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
 {
   "rule_results": [
     {
-      "controls": [],
+      "controls": [
+        "CORPORATE-POLICY_1.1"
+      ],
+      "filepath": "infra_tf",
       "platform": "terraform",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_allow_all",
       "resource_type": "aws_iam_policy",
-      "rule_description": "",
-      "rule_id": "",
+      "rule_description": "Per company policy, it is required for all IAM policies to have a description of at least 25 characters.",
+      "rule_id": "CUSTOM_0001",
       "rule_message": "",
       "rule_name": "long_description",
       "rule_result": "FAIL",
-      "rule_severity": "Unknown",
-      "rule_summary": ""
+      "rule_severity": "Low",
+      "rule_summary": "IAM policies must have a description of at least 25 characters"
     },
     {
-      "controls": [],
+      "controls": [
+        "CORPORATE-POLICY_1.1"
+      ],
+      "filepath": "infra_tf",
       "platform": "terraform",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_deny_all",
       "resource_type": "aws_iam_policy",
-      "rule_description": "",
-      "rule_id": "",
+      "rule_description": "Per company policy, it is required for all IAM policies to have a description of at least 25 characters.",
+      "rule_id": "CUSTOM_0001",
       "rule_message": "",
       "rule_name": "long_description",
       "rule_result": "PASS",
-      "rule_severity": "Unknown",
-      "rule_summary": ""
+      "rule_severity": "Low",
+      "rule_summary": "IAM policies must have a description of at least 25 characters"
     },
     {
       "controls": [
         "CIS-AWS_v1.2.0_1.22"
       ],
+      "filepath": "infra_tf",
       "platform": "terraform",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_allow_all",
@@ -124,6 +126,7 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "controls": [
         "CIS-AWS_v1.2.0_1.22"
       ],
+      "filepath": "infra_tf",
       "platform": "terraform",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_deny_all",
@@ -138,18 +141,21 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
     }
   ],
   "summary": {
-    "filenames": [],
+    "filepaths": [
+      "infra_tf"
+    ],
     "rule_results": {
       "FAIL": 2,
-      "PASS": 2
+      "PASS": 2,
+      "WAIVED": 0
     },
     "severities": {
       "Critical": 0,
       "High": 1,
       "Informational": 0,
-      "Low": 0,
+      "Low": 1,
       "Medium": 0,
-      "Unknown": 1
+      "Unknown": 0
     }
   }
 }
@@ -157,9 +163,9 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
 
 The summary at the end is the most important part -- it's a breakdown of the compliance state of your infrastructure-as-code. In this case, there were 2 `FAIL` rule results. This is great, because now we know there's a policy violation in our Terraform!
 
-Above, you can see that the resource `aws_iam_policy.basically_allow_all` had a `FAIL` result for the rule [`tf_aws_iam_admin_policy`](https://github.com/fugue/regula/blob/master/rules/tf/aws/iam/admin_policy.rego), which maps to the control `CIS-AWS_v1.2.0_1.22`.
+Above, you can see that the resource `aws_iam_policy.basically_allow_all` had a `FAIL` result for the rule [`tf_aws_iam_admin_policy`](https://github.com/fugue/regula/blob/master/rego/rules/tf/aws/iam/admin_policy.rego), which maps to the control `CIS-AWS_v1.2.0_1.22`.
 
-The resource _also_ failed the custom rule [`long_description`](https://github.com/fugue/regula-ci-example/blob/master/example_custom_rule/long_description.rego), which has an `Unknown` severity because the rule omits the severity metadata.
+The resource _also_ failed the custom rule [`long_description`](https://github.com/fugue/regula-ci-example/blob/master/example_custom_rule/long_description.rego), which has a `Low` severity.
 
 Further down, you can see that the resource `aws_iam_policy.basically_deny_all` has a rule result of `PASS` for both rules.
 
@@ -169,10 +175,13 @@ The output for our example **Regula CloudFormation** job is similar, as our inva
 
 ```
   "summary": {
-    "filenames": [],
+    "filepaths": [
+      "infra_cfn/cloudformation.yaml"
+    ],
     "rule_results": {
       "FAIL": 7,
-      "PASS": 10
+      "PASS": 10,
+      "WAIVED": 0
     },
     "severities": {
       "Critical": 0,
@@ -191,10 +200,13 @@ The output for our example **Regula Valid CloudFormation** job has 0 `FAIL` rule
 
 ```
    "summary": {
-    "filenames": [],
+    "filepaths": [
+      "infra_valid_cfn/cloudformation.yaml"
+    ],
     "rule_results": {
       "FAIL": 0,
-      "PASS": 3
+      "PASS": 3,
+      "WAIVED": 0
     },
     "severities": {
       "Critical": 0,
@@ -209,17 +221,18 @@ The output for our example **Regula Valid CloudFormation** job has 0 `FAIL` rule
 
 #### Results - multiple CloudFormation templates
 
-In our example **Regula multiple CloudFormation templates**, there are two `filenames` listed because we passed in two CloudFormation templates:
+In our example **Regula multiple CloudFormation templates**, there are two `filepaths` listed because we passed in two CloudFormation templates:
 
 ```
   "summary": {
-    "filenames": [
+    "filepaths": [
       "infra_cfn/cloudformation.yaml",
       "infra_valid_cfn/cloudformation.yaml"
     ],
     "rule_results": {
       "FAIL": 7,
-      "PASS": 13
+      "PASS": 13,
+      "WAIVED": 0
     },
     "severities": {
       "Critical": 0,
@@ -234,18 +247,19 @@ In our example **Regula multiple CloudFormation templates**, there are two `file
 
 #### Results - CloudFormation and Terraform
 
-In our example **Regula on CloudFormation and Terraform**, `filenames` lists each CloudFormation template and Terraform project directory:
+In our example **Regula on CloudFormation and Terraform**, `filepaths` lists each CloudFormation template and Terraform project directory:
 
 ```
   "summary": {
-    "filenames": [
+    "filepaths": [
       "infra_cfn/cloudformation.yaml",
-      "infra_valid_cfn/cloudformation.yaml",
-      "infra_tf"
+      "infra_tf",
+      "infra_valid_cfn/cloudformation.yaml"
     ],
     "rule_results": {
       "FAIL": 8,
-      "PASS": 14
+      "PASS": 14,
+      "WAIVED": 0
     },
     "severities": {
       "Critical": 0,
@@ -261,7 +275,8 @@ In our example **Regula on CloudFormation and Terraform**, `filenames` lists eac
 ## Further Reading
 For more information about Regula and how to use it, check out these resources:
 
-- [Regula](https://github.com/fugue/regula)
+- [Regula repository](https://github.com/fugue/regula)
+- [Regula documentation](https://regula.dev)
 - [Regula GitHub Action](https://github.com/fugue/regula-action)
 - [fregot](https://github.com/fugue/fregot)
 - [OPA](https://www.openpolicyagent.org/)
