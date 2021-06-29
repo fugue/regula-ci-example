@@ -75,8 +75,8 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "controls": [
         "CORPORATE-POLICY_1.1"
       ],
-      "filepath": "infra_tf",
-      "platform": "terraform",
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_allow_all",
       "resource_type": "aws_iam_policy",
@@ -92,8 +92,8 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "controls": [
         "CORPORATE-POLICY_1.1"
       ],
-      "filepath": "infra_tf",
-      "platform": "terraform",
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_deny_all",
       "resource_type": "aws_iam_policy",
@@ -107,10 +107,11 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
     },
     {
       "controls": [
-        "CIS-AWS_v1.2.0_1.22"
+        "CIS-AWS_v1.2.0_1.22",
+        "CIS-AWS_v1.3.0_1.16"
       ],
-      "filepath": "infra_tf",
-      "platform": "terraform",
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_allow_all",
       "resource_type": "aws_iam_policy",
@@ -124,10 +125,11 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
     },
     {
       "controls": [
-        "CIS-AWS_v1.2.0_1.22"
+        "CIS-AWS_v1.2.0_1.22",
+        "CIS-AWS_v1.3.0_1.16"
       ],
-      "filepath": "infra_tf",
-      "platform": "terraform",
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
       "provider": "aws",
       "resource_id": "aws_iam_policy.basically_deny_all",
       "resource_type": "aws_iam_policy",
@@ -138,15 +140,45 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_result": "PASS",
       "rule_severity": "High",
       "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges"
+    },
+    {
+      "controls": [],
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
+      "provider": "aws",
+      "resource_id": "aws_iam_policy.basically_allow_all",
+      "resource_type": "aws_iam_policy",
+      "rule_description": "IAM policies should not allow broad list actions on S3 buckets. Should a malicious actor gain access to a role with a policy that includes broad list actions such as ListAllMyBuckets, the malicious actor would be able to enumerate all buckets and potentially extract sensitive data.",
+      "rule_id": "FG_R00218",
+      "rule_message": "",
+      "rule_name": "tf_aws_iam_s3_nolist",
+      "rule_result": "PASS",
+      "rule_severity": "Medium",
+      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets"
+    },
+    {
+      "controls": [],
+      "filepath": "infra_tf/main.tf",
+      "input_type": "tf",
+      "provider": "aws",
+      "resource_id": "aws_iam_policy.basically_deny_all",
+      "resource_type": "aws_iam_policy",
+      "rule_description": "IAM policies should not allow broad list actions on S3 buckets. Should a malicious actor gain access to a role with a policy that includes broad list actions such as ListAllMyBuckets, the malicious actor would be able to enumerate all buckets and potentially extract sensitive data.",
+      "rule_id": "FG_R00218",
+      "rule_message": "",
+      "rule_name": "tf_aws_iam_s3_nolist",
+      "rule_result": "PASS",
+      "rule_severity": "Medium",
+      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets"
     }
   ],
   "summary": {
     "filepaths": [
-      "infra_tf"
+      "infra_tf/main.tf"
     ],
     "rule_results": {
       "FAIL": 2,
-      "PASS": 2,
+      "PASS": 4,
       "WAIVED": 0
     },
     "severities": {
@@ -253,12 +285,12 @@ In our example **Regula on CloudFormation and Terraform**, `filepaths` lists eac
   "summary": {
     "filepaths": [
       "infra_cfn/cloudformation.yaml",
-      "infra_tf",
+      "infra_tf/main.tf",
       "infra_valid_cfn/cloudformation.yaml"
     ],
     "rule_results": {
       "FAIL": 8,
-      "PASS": 14,
+      "PASS": 16,
       "WAIVED": 0
     },
     "severities": {
