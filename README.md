@@ -86,7 +86,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "long_description",
       "rule_result": "FAIL",
       "rule_severity": "Low",
-      "rule_summary": "IAM policies must have a description of at least 25 characters"
+      "rule_summary": "IAM policies must have a description of at least 25 characters",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 6,
+          "column": 1
+        }
+      ]
     },
     {
       "controls": [
@@ -103,7 +110,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "long_description",
       "rule_result": "PASS",
       "rule_severity": "Low",
-      "rule_summary": "IAM policies must have a description of at least 25 characters"
+      "rule_summary": "IAM policies must have a description of at least 25 characters",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 25,
+          "column": 1
+        }
+      ]
     },
     {
       "controls": [
@@ -121,7 +135,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "tf_aws_iam_admin_policy",
       "rule_result": "FAIL",
       "rule_severity": "High",
-      "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges"
+      "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 6,
+          "column": 1
+        }
+      ]
     },
     {
       "controls": [
@@ -139,7 +160,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "tf_aws_iam_admin_policy",
       "rule_result": "PASS",
       "rule_severity": "High",
-      "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges"
+      "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 25,
+          "column": 1
+        }
+      ]
     },
     {
       "controls": [],
@@ -154,7 +182,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "tf_aws_iam_s3_nolist",
       "rule_result": "PASS",
       "rule_severity": "Medium",
-      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets"
+      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 6,
+          "column": 1
+        }
+      ]
     },
     {
       "controls": [],
@@ -169,7 +204,14 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_name": "tf_aws_iam_s3_nolist",
       "rule_result": "PASS",
       "rule_severity": "Medium",
-      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets"
+      "rule_summary": "IAM policies should not allow broad list actions on S3 buckets",
+      "source_location": [
+        {
+          "path": "infra_tf/main.tf",
+          "line": 25,
+          "column": 1
+        }
+      ]
     }
   ],
   "summary": {
