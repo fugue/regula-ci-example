@@ -136,6 +136,7 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_result": "FAIL",
       "rule_severity": "High",
       "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges",
+      "rule_remediation_doc": "https://docs.fugue.co/FG_R00092.html",
       "source_location": [
         {
           "path": "infra_tf/main.tf",
@@ -161,6 +162,7 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_result": "PASS",
       "rule_severity": "High",
       "rule_summary": "IAM policies should not have full \"*:*\" administrative privileges",
+      "rule_remediation_doc": "https://docs.fugue.co/FG_R00092.html",
       "source_location": [
         {
           "path": "infra_tf/main.tf",
@@ -183,6 +185,7 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_result": "PASS",
       "rule_severity": "Medium",
       "rule_summary": "IAM policies should not allow broad list actions on S3 buckets",
+      "rule_remediation_doc": "https://docs.fugue.co/FG_R00218.html",
       "source_location": [
         {
           "path": "infra_tf/main.tf",
@@ -205,6 +208,7 @@ Here's the output of our example **Regula Terraform job**, which failed the comp
       "rule_result": "PASS",
       "rule_severity": "Medium",
       "rule_summary": "IAM policies should not allow broad list actions on S3 buckets",
+      "rule_remediation_doc": "https://docs.fugue.co/FG_R00218.html",
       "source_location": [
         {
           "path": "infra_tf/main.tf",
