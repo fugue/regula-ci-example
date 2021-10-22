@@ -46,6 +46,11 @@ The jobs use the following [inputs](https://github.com/fugue/regula-action#input
 **regula_input_list_job**
 - `input_path` is set to both CloudFormation templates _and_ the Terraform directory
 
+**regula_tf_plan_job**
+- This job uses the `hashicorp/setup-terraform` action to install Terraform and then generates a plan JSON file.
+- **IMPORTANT**: By default, the `hashicorp/setup-terraform` action wraps the `terraform` binary with a script that outputs some additional information for each command it executes. It's necessary to use the `terraform_wrapper: false` option, as we're doing in this example, in order for the plan JSON file to be valid.
+- `input_path` is set to the plan JSON file generated with `terraform plan` and `terraform show`.
+
 If you'd like to further customize your action, check out GitHub's docs for [configuring a workflow](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow).
 
 When you're done, push your changes. Now, the action will run every time you push to the repo. (Unless you've configured your action with a different trigger, of course!) For more information about GitHub Actions, see the [docs](https://help.github.com/en/actions).
@@ -342,6 +347,31 @@ In our example **Regula on CloudFormation and Terraform**, `filepaths` lists eac
     "severities": {
       "Critical": 0,
       "High": 7,
+      "Informational": 0,
+      "Low": 1,
+      "Medium": 0,
+      "Unknown": 0
+    }
+  }
+```
+
+#### Results - Terraform plan JSON file
+
+In our example **Regula on a Terraform plan JSON file**, we used the `haschicorp/setup-terraform` action to generate a plan file from a Terraform configuration. We then evaluated that plan file with Regula:
+
+```
+  "summary": {
+    "filepaths": [
+      "infra_tf/plan.json"
+    ],
+    "rule_results": {
+      "FAIL": 2,
+      "PASS": 4,
+      "WAIVED": 0
+    },
+    "severities": {
+      "Critical": 0,
+      "High": 1,
       "Informational": 0,
       "Low": 1,
       "Medium": 0,
