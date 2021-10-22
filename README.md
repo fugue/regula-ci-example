@@ -20,13 +20,14 @@ To use Regula to evaluate the Terraform and CloudFormation in your own repositor
 
 In your own repo, create a `.github/workflows` directory and customize your `main.yml` workflow file based on the template in [regula-action](https://github.com/fugue/regula-action#example). You can see this example's configuration in [.github/workflows/main.yml](https://github.com/fugue/regula-ci-example/blob/master/.github/workflows/main.yml).
 
-This example has 5 jobs:
+This example has 6 jobs:
 
-- `regula_tf_job` demonstrates checking invalid Terraform.
+- `regula_tf_job` demonstrates checking invalid Terraform HCL.
 - `regula_cfn_job` demonstrates checking invalid CloudFormation.
 - `regula_valid_cfn_job` demonstrates checking valid CloudFormation.
 - `regula_multi_cfn_job` demonstrates checking multiple CloudFormation templates (valid and invalid).
 - `regula_input_list_job` demonstrates checking CloudFormation _and_ Terraform (valid and invalid).
+- `regula_tf_plan_job` demonstrates checking an invalid Terraform plan.
 
 The jobs use the following [inputs](https://github.com/fugue/regula-action#inputs):
 
@@ -357,7 +358,7 @@ In our example **Regula on CloudFormation and Terraform**, `filepaths` lists eac
 
 #### Results - Terraform plan JSON file
 
-In our example **Regula on a Terraform plan JSON file**, we used the `haschicorp/setup-terraform` action to generate a plan file from a Terraform configuration. We then evaluated that plan file with Regula:
+In our example **Regula on a Terraform plan JSON file**, we used the `hashicorp/setup-terraform` action to generate a plan file from a Terraform configuration. We then evaluated that plan file with Regula:
 
 ```
   "summary": {
