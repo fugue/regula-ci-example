@@ -49,3 +49,26 @@ jobs:
           infra_cfn/cloudformation.yaml
           infra_valid_cfn/cloudformation.yaml
           infra_tf
+
+  regula_tf_plan_job:
+    runs-on: ubuntu-latest
+    name: Regula on a Terraform plan JSON
+    steps:
+    - uses: actions/checkout@master
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_wrapper: false
+        terraform_version: 1.0.8
+    - run: |
+        cd infra_tf
+        terraform init
+        terraform plan -refresh=false -out="plan.tfplan"
+        terraform show -json plan.tfplan > plan.json
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - uses: fugue/regula-action@v1.6.0
+      with:
+        input_path: infra_tf/plan.json
+        input_type: tf-plan
+        rego_paths: example_custom_rule

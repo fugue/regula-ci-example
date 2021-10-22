@@ -20,13 +20,14 @@ To use Regula to evaluate the Terraform and CloudFormation in your own repositor
 
 In your own repo, create a `.github/workflows` directory and customize your `main.yml` workflow file based on the template in [regula-action](https://github.com/fugue/regula-action#example). You can see this example's configuration in [.github/workflows/main.yml](https://github.com/fugue/regula-ci-example/blob/master/.github/workflows/main.yml).
 
-This example has 5 jobs:
+This example has 6 jobs:
 
-- `regula_tf_job` demonstrates checking invalid Terraform.
+- `regula_tf_job` demonstrates checking invalid Terraform HCL.
 - `regula_cfn_job` demonstrates checking invalid CloudFormation.
 - `regula_valid_cfn_job` demonstrates checking valid CloudFormation.
 - `regula_multi_cfn_job` demonstrates checking multiple CloudFormation templates (valid and invalid).
 - `regula_input_list_job` demonstrates checking CloudFormation _and_ Terraform (valid and invalid).
+- `regula_tf_plan_job` demonstrates checking an invalid Terraform plan.
 
 The jobs use the following [inputs](https://github.com/fugue/regula-action#inputs):
 
@@ -45,6 +46,11 @@ The jobs use the following [inputs](https://github.com/fugue/regula-action#input
 
 **regula_input_list_job**
 - `input_path` is set to both CloudFormation templates _and_ the Terraform directory
+
+**regula_tf_plan_job**
+- This job uses the `hashicorp/setup-terraform` action to install Terraform and then generates a plan JSON file.
+- **IMPORTANT**: By default, the `hashicorp/setup-terraform` action wraps the `terraform` binary with a script that outputs some additional information for each command it executes. It's necessary to use the `terraform_wrapper: false` option, as we're doing in this example, in order for the plan JSON file to be valid.
+- `input_path` is set to the plan JSON file generated with `terraform plan` and `terraform show`.
 
 If you'd like to further customize your action, check out GitHub's docs for [configuring a workflow](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow).
 
@@ -342,6 +348,31 @@ In our example **Regula on CloudFormation and Terraform**, `filepaths` lists eac
     "severities": {
       "Critical": 0,
       "High": 7,
+      "Informational": 0,
+      "Low": 1,
+      "Medium": 0,
+      "Unknown": 0
+    }
+  }
+```
+
+#### Results - Terraform plan JSON file
+
+In our example **Regula on a Terraform plan JSON file**, we used the `hashicorp/setup-terraform` action to generate a plan file from a Terraform configuration. We then evaluated that plan file with Regula:
+
+```
+  "summary": {
+    "filepaths": [
+      "infra_tf/plan.json"
+    ],
+    "rule_results": {
+      "FAIL": 2,
+      "PASS": 4,
+      "WAIVED": 0
+    },
+    "severities": {
+      "Critical": 0,
+      "High": 1,
       "Informational": 0,
       "Low": 1,
       "Medium": 0,
