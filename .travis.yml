@@ -2,7 +2,7 @@ sudo: false
 env:
   global:
   - PATH="$HOME/.local/bin:$PATH"
-  - REGULA_VERSION=1.6.0
+  - REGULA_VERSION=2.5.0
 
 before_script:
 - mkdir "$HOME/.local/bin"
