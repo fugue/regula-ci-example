@@ -2,19 +2,11 @@ sudo: false
 env:
   global:
   - PATH="$HOME/.local/bin:$PATH"
-  - REGULA_VERSION=1.6.0
+  - REGULA_VERSION=2.5.0
 
 before_script:
 - mkdir "$HOME/.local/bin"
-
-# Install regula
 - curl -L "https://github.com/fugue/regula/releases/download/v${REGULA_VERSION}/regula_${REGULA_VERSION}_Linux_x86_64.tar.gz" | tar -xvz -C "$HOME/.local/bin"
 
 script:
-# Run regula
-- REGULA_OUTPUT="$(mktemp)"
-- (regula run -f json || true) | tee "$REGULA_OUTPUT"
-- REGULA_RULES_PASSED="$(jq -r '.summary.rule_results.PASS' "$REGULA_OUTPUT")"
-- REGULA_RULES_FAILED="$(jq -r '.summary.rule_results.FAIL' "$REGULA_OUTPUT")"
-- echo "${REGULA_RULES_PASSED} rules passed, ${REGULA_RULES_FAILED} rules failed" >&2
-- if [[ "$REGULA_RULES_FAILED" -gt 0 ]]; then exit 1; fi
+- regula run
